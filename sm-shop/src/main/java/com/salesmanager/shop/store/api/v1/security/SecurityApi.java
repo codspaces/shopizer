@@ -25,10 +25,9 @@ import com.salesmanager.shop.model.security.ReadablePermission;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Api for managing security
@@ -38,7 +37,7 @@ import io.swagger.annotations.Tag;
  */
 @RestController
 @RequestMapping(value = "/api/v1/sec")
-@Api(tags = { "Groups and permissions Api" })
+@Tag(tags = { "Groups and permissions Api" })
 @SwaggerDefinition(tags = {
 		@Tag(name = "List of supported groups and permissions", description = "List groups and attached permissions for reference") })
 public class SecurityApi {
@@ -53,7 +52,7 @@ public class SecurityApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping({ "/private/{group}/permissions" })
-	@ApiOperation(httpMethod = "GET", value = "Get permissions by group", notes = "", produces = MediaType.APPLICATION_JSON_VALUE, response = List.class)
+	@Operation(httpMethod = "GET", summary = "Get permissions by group", description = "")
 	public List<ReadablePermission> listPermissions(@PathVariable String group) {
 
 		Group g = null;
