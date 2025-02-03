@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,8 +66,9 @@ public class DataConfiguration {
     @Value("${db.maxPoolSize}")
     private int maxPoolSize;
 
-    @Bean
-    public HikariDataSource dataSource() {
+	@Bean
+	@DependsOnDatabaseInitialization
+	public HikariDataSource dataSource() {
     	HikariDataSource dataSource = DataSourceBuilder.create().type(HikariDataSource.class)
     	.driverClassName(driverClassName)
     	.url(url)

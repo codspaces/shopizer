@@ -2,11 +2,12 @@ package com.salesmanager.test.shop.integration.store;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Arrays;
 import javax.inject.Inject;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,7 +17,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.shop.application.ShopApplication;
@@ -26,7 +26,6 @@ import com.salesmanager.shop.model.store.ReadableMerchantStore;
 import com.salesmanager.test.shop.common.ServicesTestSupport;
 
 @SpringBootTest(classes = ShopApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
 public class MerchantStoreApiIntegrationTest extends ServicesTestSupport {
   
   private static final String TEST_STORE_CODE = "test";
@@ -44,7 +43,7 @@ public class MerchantStoreApiIntegrationTest extends ServicesTestSupport {
   public void testGetDefaultStore() throws Exception {
       final HttpEntity<String> httpEntity = new HttpEntity<>(getHeader());
 
-      final ResponseEntity<ReadableMerchantStore> response = testRestTemplate.exchange(String.format("/api/v1/store/" + MerchantStore.DEFAULT_STORE), HttpMethod.GET,
+      final ResponseEntity<ReadableMerchantStore> response = testRestTemplate.exchange(("/api/v1/store/" + MerchantStore.DEFAULT_STORE).formatted(), HttpMethod.GET,
               httpEntity, ReadableMerchantStore.class);
       if (response.getStatusCode() != HttpStatus.OK) {
           throw new Exception(response.toString());
@@ -81,7 +80,7 @@ public class MerchantStoreApiIntegrationTest extends ServicesTestSupport {
       
       final HttpEntity<PersistableMerchantStore> httpEntity = new HttpEntity<PersistableMerchantStore>(createdStore, getHeader());
 
-      ResponseEntity<Void> response = testRestTemplate.exchange(String.format("/api/v1/private/store/"), HttpMethod.POST, httpEntity, Void.class);
+      ResponseEntity<Void> response = testRestTemplate.exchange("/api/v1/private/store/".formatted(), HttpMethod.POST, httpEntity, Void.class);
 
       assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -98,7 +97,7 @@ public class MerchantStoreApiIntegrationTest extends ServicesTestSupport {
 
       HttpEntity<LinkedMultiValueMap<String, Object>> entity = new HttpEntity<LinkedMultiValueMap<String, Object>>(parameters, headers);
 
-      ResponseEntity<Void> createResponse = testRestTemplate.exchange(String.format("/api/v1/private/store/" + MerchantStore.DEFAULT_STORE + "/marketing/logo"), HttpMethod.POST, entity, Void.class);
+      ResponseEntity<Void> createResponse = testRestTemplate.exchange(("/api/v1/private/store/" + MerchantStore.DEFAULT_STORE + "/marketing/logo").formatted(), HttpMethod.POST, entity, Void.class);
 
       // Expect Created
       assertThat(createResponse.getStatusCode(), is(HttpStatus.CREATED));
@@ -106,7 +105,7 @@ public class MerchantStoreApiIntegrationTest extends ServicesTestSupport {
       // now remove logo
       HttpEntity<Void> deleteRequest = new HttpEntity<Void>(getHeader());
       
-      ResponseEntity<Void> deleteResponse = testRestTemplate.exchange(String.format("/api/v1/private/store/" + MerchantStore.DEFAULT_STORE + "/marketing/logo"), HttpMethod.DELETE, deleteRequest, Void.class);
+      ResponseEntity<Void> deleteResponse = testRestTemplate.exchange(("/api/v1/private/store/" + MerchantStore.DEFAULT_STORE + "/marketing/logo").formatted(), HttpMethod.DELETE, deleteRequest, Void.class);
 
       // Expect Ok
       assertThat(deleteResponse.getStatusCode(), is(HttpStatus.OK));

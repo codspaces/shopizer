@@ -18,7 +18,7 @@ public interface ProductAvailabilityRepository extends JpaRepository<ProductAvai
       + "join fetch p.product ppr "
       + "join fetch ppr.merchantStore pprm "
       + "where p.id=?1 ")
-  ProductAvailability getById(Long availabilityId);
+  ProductAvailability getReferenceById(Long availabilityId);
   
   @Query(value = "select distinct p from ProductAvailability p "
       + "left join fetch p.merchantStore pm "
@@ -29,7 +29,7 @@ public interface ProductAvailabilityRepository extends JpaRepository<ProductAvai
       + "join fetch ppr.merchantStore pprm "
       + "where p.id=?1 "
       + "and pprm.id=?2")
-  ProductAvailability getById(Long availabilityId, int merchantId);
+  ProductAvailability getReferenceById(Long availabilityId, int merchantId);
   
 
   @Query(value = "select distinct p from ProductAvailability p "
