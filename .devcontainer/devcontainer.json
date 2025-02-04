@@ -1,0 +1,7 @@
+{
+  "build": {"dockerfile": "Dockerfile" },
+  "postAttachCommand": ".devcontainer/startServer.sh",
+  "forwardPorts": [
+		8080
+	]
+}
