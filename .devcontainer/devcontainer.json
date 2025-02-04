@@ -1,5 +1,5 @@
 {
- "build": {"dockerfile": "Dockerfile"},
+  "image": "autodev.azurecr.io/autodev4:latest",
   "containerEnv": {
 	"SDKMAN_DIR": "/usr/local/sdkman",
   	"JAVA_HOME": "/usr/local/sdkman/candidates/java/current",	
