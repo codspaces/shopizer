@@ -1,14 +1,5 @@
 {
   "build": {"dockerfile": "Dockerfile" },
-  "containerEnv": {
-	"SDKMAN_DIR": "/usr/local/sdkman",
-  	"JAVA_HOME": "/usr/local/sdkman/candidates/java/current",	
-	"JAVA8HOME": "/usr/local/sdkman/candidates/java/8.0.382-tem",
-	"JAVA11HOME": "usr/local/sdkman/candidates/java/11.0.20-tem",
-	"JAVA17HOME": "/usr/local/sdkman/candidates/java/17.0.8-tem",
-	"JAVA21HOME": "/usr/local/sdkman/candidates/java/21.0.4-tem",
-	"AUTODEV_TEST": "true"
-  },
   "postAttachCommand": ".devcontainer/startServer.sh",
   "forwardPorts": [
 		8080
