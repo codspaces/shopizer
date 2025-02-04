@@ -1,5 +1,5 @@
 {
-  "image": "autodev.azurecr.io/autodev-github:4",
+  "image": "autodev.azurecr.io/autodev:4",
   "containerEnv": {
 	"SDKMAN_DIR": "/usr/local/sdkman",
   	"JAVA_HOME": "/usr/local/sdkman/candidates/java/current",	
