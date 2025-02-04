@@ -9,7 +9,6 @@ export JAVA21HOME=/usr/local/sdkman/candidates/java/21.0.4-tem
 export SDKMAN_DIR=/usr/local/sdkman
 export PATH="${JAVA8HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}"
 
-tar -xzf /workspace/microsoft-autodev-0.7.0.tgz -C /workspace/
 node /workspace/package/dist/src/java-upgrade/webServer/server.js
 
 exit 0
