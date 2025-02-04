@@ -28,10 +28,10 @@ import com.salesmanager.shop.store.controller.items.facade.ProductItemsFacade;
 
 import antlr.collections.List;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Tag;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -42,7 +42,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Controller
 @RequestMapping("/api/v1")
-@Tag(tags = { "Product groups management resource (Product Groups Management Api)" })
+@Tag(name = "Product groups management resource (Product Groups Management Api)")
 @SwaggerDefinition(tags = {
 		@Tag(name = "Product groups management resource", description = "Product groups management") })
 public class ProductGroupApi {
@@ -55,10 +55,10 @@ public class ProductGroupApi {
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/private/products/group")
-  @Operation(httpMethod = "POST", summary = "Create product group", description = "")
+    @ApiOperation(httpMethod = "POST", value = "Create product group", notes = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+      @Parameter(name = "store"),
+      @Parameter(name = "lang")
   })
   public @ResponseBody ProductGroup creteGroup(
       @RequestBody ProductGroup group,
@@ -73,10 +73,10 @@ public class ProductGroupApi {
   
   @ResponseStatus(HttpStatus.OK)
   @PatchMapping("/private/products/group/{code}")
-  @Operation(httpMethod = "PATCH", summary = "Update product group visible flag", description = "")
+    @ApiOperation(httpMethod = "PATCH", value = "Update product group visible flag", notes = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+      @Parameter(name = "store"),
+      @Parameter(name = "lang")
   })
   public void updateGroup(
       @RequestBody ProductGroup group,
@@ -91,10 +91,10 @@ public class ProductGroupApi {
   }
   
   @GetMapping("/private/product/groups")
-  @Operation(httpMethod = "GET", summary = "Get products groups for a given merchant", description = "")
+    @ApiOperation(httpMethod = "GET", value = "Get products groups for a given merchant", notes = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+      @Parameter(name = "store"),
+      @Parameter(name = "lang")
   })
   public @ResponseBody java.util.List<ProductGroup> list(
 			@ApiIgnore MerchantStore merchantStore,
@@ -122,10 +122,10 @@ public class ProductGroupApi {
    */
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/products/group/{code}")
-  @Operation(httpMethod = "GET", summary = "Get products by group code", description = "")
+    @ApiOperation(httpMethod = "GET", value = "Get products by group code", notes = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+      @Parameter(name = "store"),
+      @Parameter(name = "lang")
   })
   public @ResponseBody ReadableProductList getProductItemsByGroup(
       @PathVariable final String code,
@@ -234,10 +234,10 @@ public class ProductGroupApi {
   
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping("/products/group/{code}")
-  @Operation(httpMethod = "DELETE", summary = "Delete product group by group code", description = "")
+    @ApiOperation(httpMethod = "DELETE", value = "Delete product group by group code", notes = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+      @Parameter(name = "store"),
+      @Parameter(name = "lang")
   })
   public void deleteGroup(
       @PathVariable final String code,

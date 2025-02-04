@@ -1,6 +1,7 @@
 package com.salesmanager.shop.application.config;
 
-import static io.swagger.models.auth.In.HEADER;
+import io.swagger.v3.oas.models.security.SecurityScheme.In;
+import io.swagger.v3.oas.models.security.SecurityScheme.In;
 import static java.util.Collections.singletonList;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -34,10 +35,10 @@ import springfox.documentation.service.VendorExtension;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 @Configuration
-@EnableSwagger2
+@OpenAPIDefinition
 public class DocumentationConfiguration {
 
 	public static final Contact DEFAULT_CONTACT = new Contact("Shopizer", "https://www.shopizer.com", "");

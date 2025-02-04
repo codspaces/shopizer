@@ -31,7 +31,7 @@ import com.salesmanager.shop.utils.AuthorizationUtils;
 
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -39,9 +39,9 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(tags = { "Shipping configuration resource (Shipping Management Api)" })
+@io.swagger.annotations.Tag(name = "Shipping configuration resource (Shipping Management Api)")
 @SwaggerDefinition(tags = {
-		@Tag(name = "Shipping management resource", description = "Manage shipping configuration") })
+        @io.swagger.annotations.Tag(name = "Shipping management resource", description = "Manage shipping configuration") })
 public class ShippingConfigurationApi {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingConfigurationApi.class);
@@ -55,7 +55,7 @@ public class ShippingConfigurationApi {
 	@Autowired
 	private ShippingService shippingService;
 
-	@Operation(httpMethod = "GET", summary = "Get shipping origin for a specific merchant store", description = "")
+@Operation(method = "GET", summary = "Get shipping origin for a specific merchant store", description = "")
 	@GetMapping({ "/private/shipping/origin" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -83,7 +83,7 @@ public class ShippingConfigurationApi {
 	}
 
 	// list packaging
-	@Operation(httpMethod = "GET", summary = "Get list of configured packages types for a specific merchant store", description = "")
+@Operation(method = "GET", summary = "Get list of configured packages types for a specific merchant store", description = "")
 	@GetMapping({ "/private/shipping/packages" })
 	@ResponseStatus(HttpStatus.OK)
 	public List<PackageDetails> listPackages(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -97,7 +97,7 @@ public class ShippingConfigurationApi {
 	}
 
 	// get packaging
-	@Operation(httpMethod = "GET", summary = "Get package details", description = "")
+@Operation(method = "GET", summary = "Get package details", description = "")
 	@GetMapping({ "/private/shipping/package/{code}" })
 	@ResponseStatus(HttpStatus.OK)
 	public PackageDetails getPackage(@PathVariable String code, @ApiIgnore MerchantStore merchantStore,
@@ -112,7 +112,7 @@ public class ShippingConfigurationApi {
 	}
 
 	// create packaging
-	@Operation(httpMethod = "POST", summary = "Create new package specification", description = "")
+@Operation(method = "POST", summary = "Create new package specification", description = "")
 	@PostMapping({ "/private/shipping/package" })
 	@ResponseStatus(HttpStatus.OK)
 	public void createPackage(@RequestBody PackageDetails details, @ApiIgnore MerchantStore merchantStore,
@@ -127,7 +127,7 @@ public class ShippingConfigurationApi {
 	}
 
 	// edit packaging
-	@Operation(httpMethod = "PUT", summary = "Edit package specification", description = "")
+@Operation(method = "PUT", summary = "Edit package specification", description = "")
 	@PutMapping({ "/private/shipping/package/{code}" })
 	@ResponseStatus(HttpStatus.OK)
 	public void updatePackage(@PathVariable String code, @RequestBody PackageDetails details,
@@ -142,7 +142,7 @@ public class ShippingConfigurationApi {
 	}
 
 	// delete packaging
-	@Operation(httpMethod = "DELETE", summary = "Delete a package specification", description = "")
+@Operation(method = "DELETE", summary = "Delete a package specification", description = "")
 	@DeleteMapping({ "/private/shipping/package/{code}" })
 	@ResponseStatus(HttpStatus.OK)
 	public void deletePackage(@PathVariable String code, @ApiIgnore MerchantStore merchantStore,
@@ -164,7 +164,7 @@ public class ShippingConfigurationApi {
 	 * @return
 	 */
 	@GetMapping("/private/modules/shipping")
-	@Operation(httpMethod = "GET", summary = "List list of shipping modules", description = "Requires administration access")
+@Operation(method = "GET", summary = "List list of shipping modules", description = "Requires administration access")
 	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public List<IntegrationModuleSummaryEntity> shippingModules(@ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
@@ -193,7 +193,7 @@ public class ShippingConfigurationApi {
 	 * @return
 	 */
 	@GetMapping("/private/modules/shipping/{code}")
-	@Operation(httpMethod = "GET", summary = "Shipping module by code")
+@Operation(method = "GET", summary = "Shipping module by code")
 	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public IntegrationConfiguration shippingModule(@PathVariable String code,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
