@@ -7,7 +7,7 @@ export JAVA17HOME=/usr/local/sdkman/candidates/java/17.0.8-tem
 export JAVA21HOME=/usr/local/sdkman/candidates/java/21.0.4-tem
 
 export SDKMAN_DIR=/usr/local/sdkman
-export PATH="${JAVA8HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}"
+export PATH="${JAVA11HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}"
 
 node /workspace/package/dist/src/java-upgrade/webServer/server.js
 
