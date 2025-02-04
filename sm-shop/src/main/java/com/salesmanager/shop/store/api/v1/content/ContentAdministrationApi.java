@@ -41,8 +41,9 @@ import com.salesmanager.shop.store.controller.content.facade.ContentFacade;
 import com.salesmanager.shop.utils.FileNameUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -81,8 +82,8 @@ public class ContentAdministrationApi {
 	 * @throws Exception
 	 */
 	@GetMapping(value = "/private/content/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public List<ImageFile> list(@RequestParam(value = "parentPath", required = false) String path,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) throws Exception {
 
@@ -103,10 +104,10 @@ public class ContentAdministrationApi {
 	 * @throws Exception
 	 */
 	@GetMapping(value = "/private/content/folder", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ContentFolder folder(
-			@RequestParam(value = "path", required = false) String path,
+			@RequestParam(required = false) String path,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) throws Exception {
 		String decodedPath = decodeContentPath(path);
@@ -122,17 +123,17 @@ public class ContentAdministrationApi {
 	 */
 	@PostMapping(value = "/private/content/images/add", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	@ResponseStatus(HttpStatus.CREATED)
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({
+			@Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public FileStatus upload(
-			@RequestParam(value = "qqfile", required = true) MultipartFile qqfile,
-			@RequestParam(value = "qquuid", required = true) String qquuid,
-			@RequestParam(value = "qqfilename", required = true) String qqfilename,
-			@RequestParam(value = "qqtotalfilesize", required = false) Long qqtotalfilesize,
-			@RequestParam(value = "parentPath", required = false) String parentPath,
-			@RequestParam(value = "qqpartindex", required = false) Integer qqpartindex,
-			@RequestParam(value = "qqtotalparts", required = false) Integer qqtotalparts,
+			@RequestParam(required = true) MultipartFile qqfile,
+			@RequestParam(required = true) String qquuid,
+			@RequestParam(required = true) String qqfilename,
+			@RequestParam(required = false) Long qqtotalfilesize,
+			@RequestParam(required = false) String parentPath,
+			@RequestParam(required = false) Integer qqpartindex,
+			@RequestParam(required = false) Integer qqtotalparts,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {
 		
@@ -162,10 +163,10 @@ public class ContentAdministrationApi {
 	}
 	
 	@GetMapping(value = "/content/images/download")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public @ResponseBody String download(
-			@RequestParam(value = "path", required = true) String path,
+			@RequestParam(required = true) String path,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {
 		String fileName = path.substring(path.lastIndexOf("/")+1, path.length());
@@ -185,12 +186,12 @@ public class ContentAdministrationApi {
 	
 	@PostMapping(value = "/private/content/images/rename", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({
+			@Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public FileStatus rename(
-			@RequestParam(value = "path", required = true) String path,
-			@RequestParam(value = "newName", required = true) String newName,
+			@RequestParam(required = true) String path,
+			@RequestParam(required = true) String newName,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {
 
@@ -212,11 +213,11 @@ public class ContentAdministrationApi {
 	
 	@DeleteMapping(value = "/private/content/images/remove", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({
+			@Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public FileStatus remove(
-			@RequestParam(value = "path", required = true) String path,
+			@RequestParam(required = true) String path,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {
 
