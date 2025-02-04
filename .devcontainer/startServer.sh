@@ -6,6 +6,8 @@ export JAVA17HOME=/usr/local/sdkman/candidates/java/17.0.8-tem
 export JAVA21HOME=/usr/local/sdkman/candidates/java/21.0.4-tem
 export JAVA_HOME=$JAVA21HOME
 
+export GITHUB_PAT=$PAT
+
 export SDKMAN_DIR=/usr/local/sdkman
 export PATH="${JAVA11HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}"
 
