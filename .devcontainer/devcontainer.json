@@ -1,5 +1,5 @@
 {
-  "image": "autodev.azurecr.io/autodev-github:2",
+  "image": "autodev.azurecr.io/autodev-github:3",
   "containerEnv": {
 	"SDKMAN_DIR": "/usr/local/sdkman",
   	"JAVA_HOME": "/usr/local/sdkman/candidates/java/current",	
@@ -7,7 +7,8 @@
 	"JAVA11HOME": "usr/local/sdkman/candidates/java/11.0.20-tem",
 	"JAVA17HOME": "/usr/local/sdkman/candidates/java/17.0.8-tem",
 	"JAVA21HOME": "/usr/local/sdkman/candidates/java/21.0.4-tem",
-	"PATH": "${JAVA8HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}"
+	"PATH": "${JAVA8HOME}/bin:${SDKMAN_DIR}/candidates/maven/current/bin:${PATH}",
+	"AUTODEV_TEST": "true"
   },
   "postAttachCommand": ".devcontainer/startServer.sh",
   "forwardPorts": [
