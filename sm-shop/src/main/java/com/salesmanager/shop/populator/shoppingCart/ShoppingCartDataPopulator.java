@@ -145,8 +145,8 @@ public class ShoppingCartDataPopulator extends AbstractDataPopulator<ShoppingCar
                             List<ProductOptionValueDescription> optionValueDescriptions = attribute.getProductAttribute().getProductOptionValue().getDescriptionsSettoList();
                             if(!CollectionUtils.isEmpty(optionDescriptions) && !CollectionUtils.isEmpty(optionValueDescriptions)) {
                             	
-                            	String optionName = optionDescriptions.get(0).getName();
-                            	String optionValue = optionValueDescriptions.get(0).getName();
+                            	String optionName = optionDescriptions.getFirst().getName();
+                            	String optionValue = optionValueDescriptions.getFirst().getName();
                             	
                             	for(ProductOptionDescription optionDescription : optionDescriptions) {
                             		if(optionDescription.getLanguage() != null && optionDescription.getLanguage().getId().intValue() == language.getId().intValue()) {

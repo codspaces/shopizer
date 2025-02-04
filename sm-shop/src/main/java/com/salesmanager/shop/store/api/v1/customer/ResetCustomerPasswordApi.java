@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,17 +23,17 @@ import com.salesmanager.shop.store.api.exception.RestApiException;
 import com.salesmanager.shop.store.security.PasswordRequest;
 import com.salesmanager.shop.store.security.ResetPasswordRequest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-@Api(tags = { "Customer password management resource (User password Management Api)" })
+@Tag(tags = { "Customer password management resource (User password Management Api)" })
 @SwaggerDefinition(tags = {
 		@Tag(name = "Customer password management resource", description = "Customer password management") })
 public class ResetCustomerPasswordApi {
@@ -54,9 +53,9 @@ public class ResetCustomerPasswordApi {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping(value = { "/customer/password/reset/request" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "POST", value = "Launch customer password reset flow", notes = "", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "POST", summary = "Launch customer password reset flow", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void passwordResetRequest(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			@Valid @RequestBody ResetPasswordRequest customer) {
 
@@ -74,9 +73,9 @@ public class ResetCustomerPasswordApi {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/customer/{store}/reset/{token}" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "Validate customer password reset token", notes = "", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "GET", summary = "Validate customer password reset token", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void passwordResetVerify(
 			@PathVariable String store, @PathVariable String token,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -102,9 +101,9 @@ public class ResetCustomerPasswordApi {
 	 * @param language
 	 * @param request
 	 */
-	@RequestMapping(value = "/customer/{store}/password/{token}", method = RequestMethod.POST, produces = {
+	@PostMapping(value = "/customer/{store}/password/{token}", produces = {
 			"application/json" })
-	@ApiOperation(httpMethod = "POST", value = "Change customer password", response = Void.class)
+	@Operation(httpMethod = "POST", summary = "Change customer password")
 	public void changePassword(
 			@RequestBody @Valid PasswordRequest passwordRequest, 
 			@PathVariable String store,

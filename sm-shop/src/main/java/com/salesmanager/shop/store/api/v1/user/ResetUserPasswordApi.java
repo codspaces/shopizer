@@ -25,17 +25,17 @@ import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 import com.salesmanager.shop.store.security.PasswordRequest;
 import com.salesmanager.shop.store.security.ResetPasswordRequest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-@Api(tags = { "User password reset resource (User password reset Api)" })
+@Tag(tags = { "User password reset resource (User password reset Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "User password reset resource", description = "User password reset") })
 public class ResetUserPasswordApi {
 	
@@ -56,9 +56,9 @@ public class ResetUserPasswordApi {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping(value = { "/user/password/reset/request" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "POST", value = "Launch user password reset flow", notes = "", response = ReadableUser.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "POST", summary = "Launch user password reset flow", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void passwordResetRequest(
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language,
@@ -79,9 +79,9 @@ public class ResetUserPasswordApi {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/user/{store}/reset/{token}" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "Validate user password reset token", notes = "", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "GET", summary = "Validate user password reset token", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void passwordResetVerify(@PathVariable String store, @PathVariable String token,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, HttpServletRequest request) {
 
@@ -108,7 +108,7 @@ public class ResetUserPasswordApi {
 	 */
 	@PostMapping(value = "/user/{store}/password/{token}", produces = {
 			"application/json" })
-	@ApiOperation(httpMethod = "POST", value = "Change user password", response = Void.class)
+	@Operation(httpMethod = "POST", summary = "Change user password")
 	public void changePassword(
 			@RequestBody @Valid PasswordRequest passwordRequest, 
 			@PathVariable String store,

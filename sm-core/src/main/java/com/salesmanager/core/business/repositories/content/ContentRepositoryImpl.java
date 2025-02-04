@@ -93,7 +93,7 @@ public class ContentRepositoryImpl implements ContentRepositoryCustom {
 	        if (results.isEmpty()) {
 	        	return null;
 	        } else if (results.size() >= 1) {
-	        		content = results.get(0);
+	        		content = results.getFirst();
 	        }
 	        
 			if(content!=null) {

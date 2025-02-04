@@ -14,9 +14,10 @@ import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.model.system.PersistableOptin;
 import com.salesmanager.shop.model.system.ReadableOptin;
 import com.salesmanager.shop.store.controller.optin.OptinFacade;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 /** Optin a customer to events such s newsletter */
@@ -31,14 +32,13 @@ public class OptinApi {
 
   /** Create new optin */
   @PostMapping("/private/optin")
-  @ApiOperation(
+  @Operation(
       httpMethod = "POST",
-      value = "Creates an optin event type definition",
-      notes = "",
-      produces = "application/json")
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      summary = "Creates an optin event type definition",
+      description = "")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public ReadableOptin create(
       @Valid @RequestBody PersistableOptin optin, 

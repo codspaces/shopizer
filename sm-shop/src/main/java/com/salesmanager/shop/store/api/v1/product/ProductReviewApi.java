@@ -11,12 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import com.salesmanager.core.business.services.catalog.product.ProductService;
 import com.salesmanager.core.business.services.catalog.product.review.ProductReviewService;
@@ -29,8 +24,9 @@ import com.salesmanager.shop.model.catalog.product.PersistableProductReview;
 import com.salesmanager.shop.model.catalog.product.ReadableProductReview;
 import com.salesmanager.shop.store.controller.product.facade.ProductCommonFacade;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
@@ -45,19 +41,17 @@ public class ProductReviewApi {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ProductReviewApi.class);
 
-  @RequestMapping(
-      value = {
+  @PostMapping({
         "/private/products/{id}/reviews",
         "/auth/products/{id}/reviews",
         "/auth/products/{id}/reviews",
         "/auth/products/{id}/reviews"
-      },
-      method = RequestMethod.POST)
+      })
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public PersistableProductReview create(
       @PathVariable final Long id,
@@ -100,12 +94,12 @@ public class ProductReviewApi {
     }
   }
 
-  @RequestMapping(value = "/product/{id}/reviews", method = RequestMethod.GET)
+  @GetMapping("/product/{id}/reviews")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public List<ReadableProductReview> getAll(
       @PathVariable final Long id,
@@ -138,17 +132,15 @@ public class ProductReviewApi {
     }
   }
 
-  @RequestMapping(
-      value = {
+  @PutMapping({
         "/private/products/{id}/reviews/{reviewid}",
         "/auth/products/{id}/reviews/{reviewid}"
-      },
-      method = RequestMethod.PUT)
+      })
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public PersistableProductReview update(
       @PathVariable final Long id,
@@ -194,17 +186,15 @@ public class ProductReviewApi {
     }
   }
 
-  @RequestMapping(
-      value = {
+  @DeleteMapping({
         "/private/products/{id}/reviews/{reviewid}",
         "/auth/products/{id}/reviews/{reviewid}"
-      },
-      method = RequestMethod.DELETE)
+      })
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public void delete(
       @PathVariable final Long id,
