@@ -33,7 +33,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/api/v1")
-@Tag(tags = { "Product price api" })
+@Tags({ @Tag(name = "Product price api") })
 @SwaggerDefinition(tags = { @Tag(name = "Product price management", description = "Edit price and discount") })
 public class ProductPriceApi {
 
@@ -46,8 +46,8 @@ public class ProductPriceApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping({ "/private/product/{sku}/inventory/{inventoryId}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public @ResponseBody Entity save(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -66,8 +66,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping({ "/private/product/{sku}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public @ResponseBody Entity save(
 			@PathVariable String sku,
 			@Valid @RequestBody PersistableProductPrice price,
@@ -84,8 +84,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping({ "/private/product/{sku}/inventory/{inventoryId}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public void edit(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -106,8 +106,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping({ "/private/product/{sku}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public ReadableProductPrice get(
 			@PathVariable String sku,
 			@PathVariable Long priceId,
@@ -124,8 +124,8 @@ public class ProductPriceApi {
 	}
 	
 	@GetMapping({ "/private/product/{sku}/inventory/{inventoryId}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public List<ReadableProductPrice> list(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -140,8 +140,8 @@ public class ProductPriceApi {
 	
 	
 	@GetMapping({ "/private/product/{sku}/prices"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public List<ReadableProductPrice> list(
 			@PathVariable String sku,
 			@ApiIgnore MerchantStore merchantStore, 
@@ -155,8 +155,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping({ "/private/product/{sku}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@Parameters({ @Parameter(name = "store", example = "DEFAULT"),
+@Parameter(name = "lang", example = "en") })
 	public void delete(
 			@PathVariable String sku,
 			@PathVariable Long priceId,
