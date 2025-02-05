@@ -46,8 +46,7 @@ public class UserConnectionPK implements Serializable {
 	}
 
 	public boolean equals(Object o) {
-		if (o instanceof UserConnectionPK) {
-			UserConnectionPK other = (UserConnectionPK) o;
+		if (o instanceof UserConnectionPK other) {
 			return other.getProviderId().equals(getProviderId())
 					&& other.getProviderUserId().equals(getProviderUserId())
 					&& other.getUserId().equals(getUserId());

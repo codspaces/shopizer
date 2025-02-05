@@ -9,11 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.salesmanager.core.business.services.catalog.pricing.PricingService;
 import com.salesmanager.core.business.services.customer.CustomerService;
@@ -32,16 +28,16 @@ import com.salesmanager.shop.populator.order.ReadableOrderSummaryPopulator;
 import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
 import com.salesmanager.shop.utils.LabelUtils;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/api/v1")
-@Api(tags = {"Order Total calculation for a given shopping cart (Order Total Api)"})
+@Tag(tags = {"Order Total calculation for a given shopping cart (Order Total Api)"})
 @SwaggerDefinition(tags = {
     @Tag(name = "Order Total resource", description = "Calculates order total for a giben shopping cart")
 })
@@ -72,17 +68,15 @@ public class OrderTotalApi {
    * @return
    * @throws Exception
    */
-  @RequestMapping(
-      value = {"/auth/cart/{id}/total"},
-      method = RequestMethod.GET)
+  @GetMapping({"/auth/cart/{id}/total"})
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public ReadableOrderTotalSummary payment(
       @PathVariable final Long id,
-      @RequestParam(value = "quote", required = false) Long quote,
+      @RequestParam(required = false) Long quote,
       @ApiIgnore MerchantStore merchantStore,
       @ApiIgnore Language language,
       HttpServletRequest request,
@@ -162,17 +156,15 @@ public class OrderTotalApi {
    * @param response
    * @return
    */
-  @RequestMapping(
-      value = {"/cart/{code}/total"},
-      method = RequestMethod.GET)
+  @GetMapping({"/cart/{code}/total"})
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public ReadableOrderTotalSummary calculateTotal(
       @PathVariable final String code,
-      @RequestParam(value = "quote", required = false) Long quote,
+      @RequestParam(required = false) Long quote,
       @ApiIgnore MerchantStore merchantStore,
       @ApiIgnore Language language,//possible postal code, province and country
       HttpServletResponse response) {

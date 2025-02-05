@@ -258,7 +258,7 @@ public class TaxServiceImpl
 				
 				TaxItem taxItem = new TaxItem();
 				taxItem.setItemPrice(taxedItemValue);
-				taxItem.setLabel(taxRate.getDescriptions().get(0).getName());
+				taxItem.setLabel(taxRate.getDescriptions().getFirst().getName());
 				taxItem.setTaxRate(taxRate);
 				taxItems.add(taxItem);
 				

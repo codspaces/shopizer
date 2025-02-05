@@ -90,7 +90,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			
 				//set names
 				for(Zone zone : zones) {
-					ZoneDescription description = zone.getDescriptions().get(0);
+					ZoneDescription description = zone.getDescriptions().getFirst();
 					zone.setName(description.getName());
 					
 				}
@@ -128,7 +128,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			
 				//set names
 				for(Zone zone : zones) {
-					ZoneDescription description = zone.getDescriptions().get(0);
+					ZoneDescription description = zone.getDescriptions().getFirst();
 					zone.setName(description.getName());
 					
 				}
@@ -162,7 +162,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			
 				//set names
 				for(Zone zone : zns) {
-					ZoneDescription description = zone.getDescriptions().get(0);
+					ZoneDescription description = zone.getDescriptions().getFirst();
 					zone.setName(description.getName());
 					zones.put(zone.getCode(), zone);
 					

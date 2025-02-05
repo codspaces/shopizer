@@ -27,12 +27,12 @@ import com.salesmanager.shop.model.tax.PersistableTaxRate;
 import com.salesmanager.shop.model.tax.ReadableTaxRate;
 import com.salesmanager.shop.store.controller.tax.facade.TaxFacade;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -44,7 +44,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-@Api(tags = { "Tax rates management resource (Tax rates management Api)" })
+@Tag(tags = { "Tax rates management resource (Tax rates management Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Tax rates management resource", description = "Manage tax rates") })
 public class TaxRatesApi {
 
@@ -55,8 +55,8 @@ public class TaxRatesApi {
 
 	/** Create new tax rate for a given MerchantStore */
 	@PostMapping("/private/tax/rate")
-	@ApiOperation(httpMethod = "POST", value = "Creates a taxRate", notes = "Requires administration access", produces = "application/json", response = Entity.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "POST", summary = "Creates a taxRate", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public Entity create(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			@Valid @RequestBody PersistableTaxRate taxRate) {
 
@@ -65,9 +65,9 @@ public class TaxRatesApi {
 	}
 
 	@GetMapping(value = "/private/tax/rate/unique", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "Verify if taxRate is unique", notes = "", produces = "application/json", response = ResponseEntity.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "GET", summary = "Verify if taxRate is unique", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ResponseEntity<EntityExists> exists(@RequestParam String code, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 
@@ -78,8 +78,8 @@ public class TaxRatesApi {
 
 	/** Update tax rate for a given MerchantStore */
 	@PutMapping("/private/tax/rate/{id}")
-	@ApiOperation(httpMethod = "PUT", value = "Updates a taxRate", notes = "Requires administration access", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "PUT", summary = "Updates a taxRate", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public void update(@ApiIgnore MerchantStore merchantStore, @PathVariable Long id, @ApiIgnore Language language,
 			@Valid @RequestBody PersistableTaxRate taxRate) {
 
@@ -89,11 +89,11 @@ public class TaxRatesApi {
 	}
 
 	@GetMapping(value = "/private/tax/rates", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "List taxRates by store", notes = "", produces = "application/json", response = ReadableEntityList.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public ReadableEntityList<ReadableTaxRate> list(@RequestParam(name = "count", defaultValue = "10") int count,
-			@RequestParam(name = "page", defaultValue = "0") int page, @ApiIgnore MerchantStore merchantStore,
+	@Operation(httpMethod = "GET", summary = "List taxRates by store", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
+	public ReadableEntityList<ReadableTaxRate> list(@RequestParam(defaultValue = "10") int count,
+			@RequestParam(defaultValue = "0") int page, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 
 		return taxFacade.taxRates(merchantStore, language);
@@ -101,8 +101,8 @@ public class TaxRatesApi {
 	}
 	
 	@GetMapping("/private/tax/rate/{id}")
-	@ApiOperation(httpMethod = "GET", value = "Get a taxRate by code", notes = "Requires administration access", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "GET", summary = "Get a taxRate by code", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public ReadableTaxRate get(@ApiIgnore MerchantStore merchantStore, @PathVariable Long id, @ApiIgnore Language language) {
 
 		return taxFacade.taxRate(id, merchantStore, language);
@@ -110,9 +110,9 @@ public class TaxRatesApi {
 	}
 
 	@DeleteMapping(value = "/private/tax/rate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "DELETE", value = "Delete tax rate", notes = "", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Operation(httpMethod = "DELETE", summary = "Delete tax rate", description = "")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void delete(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
 		taxFacade.deleteTaxRate(id, merchantStore, language);
