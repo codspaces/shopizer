@@ -21,7 +21,7 @@ import com.salesmanager.shop.store.controller.product.facade.ProductPriceFacade;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Tag;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -33,8 +33,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/api/v1")
-@Tag(tags = { "Product price api" })
-@SwaggerDefinition(tags = { @Tag(name = "Product price management", description = "Edit price and discount") })
+@Tag(name = "Product price api")
+@SwaggerDefinition(tags = { @io.swagger.annotations.Tag(name = "Product price management", description = "Edit price and discount") })
 public class ProductPriceApi {
 
 
@@ -46,8 +46,8 @@ public class ProductPriceApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping({ "/private/product/{sku}/inventory/{inventoryId}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public @ResponseBody Entity save(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -66,8 +66,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping({ "/private/product/{sku}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public @ResponseBody Entity save(
 			@PathVariable String sku,
 			@Valid @RequestBody PersistableProductPrice price,
@@ -84,8 +84,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping({ "/private/product/{sku}/inventory/{inventoryId}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public void edit(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -106,8 +106,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping({ "/private/product/{sku}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public ReadableProductPrice get(
 			@PathVariable String sku,
 			@PathVariable Long priceId,
@@ -124,8 +124,8 @@ public class ProductPriceApi {
 	}
 	
 	@GetMapping({ "/private/product/{sku}/inventory/{inventoryId}/price"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public List<ReadableProductPrice> list(
 			@PathVariable String sku,
 			@PathVariable Long inventoryId,
@@ -140,8 +140,8 @@ public class ProductPriceApi {
 	
 	
 	@GetMapping({ "/private/product/{sku}/prices"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public List<ReadableProductPrice> list(
 			@PathVariable String sku,
 			@ApiIgnore MerchantStore merchantStore, 
@@ -155,8 +155,8 @@ public class ProductPriceApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping({ "/private/product/{sku}/price/{priceId}"})
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParams({ @ApiImplicitParam(name = "store", defaultValue = "DEFAULT"),
+@ApiImplicitParam(name = "lang", defaultValue = "en") })
 	public void delete(
 			@PathVariable String sku,
 			@PathVariable Long priceId,

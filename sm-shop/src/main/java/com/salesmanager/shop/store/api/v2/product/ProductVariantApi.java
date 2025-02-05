@@ -27,12 +27,12 @@ import com.salesmanager.shop.store.controller.product.facade.ProductVariantFacad
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Api;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -47,9 +47,9 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Controller
 @RequestMapping("/api/v2")
-@Tag(tags = { "Product variants api" })
+@Tag(name = "Product variants api")
 @SwaggerDefinition(tags = {
-		@Tag(name = "Product variants resource", description = "Manage inventory for a given product") })
+@Tag(name = "Product variants resource", description = "Manage inventory for a given product") })
 public class ProductVariantApi {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductVariantApi.class);
@@ -62,8 +62,8 @@ public class ProductVariantApi {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = { "/private/product/{productId}/variant" })
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-		@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT")
+    @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
 	public @ResponseBody Entity create(
 			@Valid @RequestBody PersistableProductVariant variant, 
 			@PathVariable Long productId,
@@ -86,7 +86,7 @@ public class ProductVariantApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = { "/private/product/{id}/variant/{variantId}" })
-	@Operation(httpMethod = "PUT", summary = "Update product variant", description = "")
+@ApiOperation(httpMethod = "PUT", value = "Update product variant", notes = "")
 	public @ResponseBody void update(@PathVariable Long id, @PathVariable Long variantId,
 			@Valid @RequestBody PersistableProductVariant variant, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
@@ -104,9 +104,9 @@ public class ProductVariantApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/private/product/{id}/variant/{sku}/unique" }, produces = "application/json")
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
-	@Operation(httpMethod = "GET", summary = "Check if option set code already exists", description = "")
+@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT")
+    @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+@ApiOperation(httpMethod = "GET", value = "Check if option set code already exists", notes = "")
 	public @ResponseBody ResponseEntity<EntityExists> exists(
 			@PathVariable Long id, 
 			@PathVariable String sku,
@@ -127,11 +127,11 @@ public class ProductVariantApi {
 	}
 
 	@GetMapping(value = "/private/product/{id}/variant/{variantId}", produces = "application/json")
-	@Operation(httpMethod = "GET", summary = "Get a productVariant by id", description = "For administration and shop purpose. Specifying ?merchant is required otherwise it falls back to DEFAULT")
+@ApiOperation(httpMethod = "GET", value = "Get a productVariant by id", notes = "For administration and shop purpose. Specifying ?merchant is required otherwise it falls back to DEFAULT")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Single product found", response = ReadableProductVariant.class) })
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+    @ApiResponse(code = 200, message = "Single product found", response = ReadableProductVariant.class) })
+@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT")
+    @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
 	public @ResponseBody ReadableProductVariant get(
 			@PathVariable final Long id, 
 			@PathVariable Long variantId,
@@ -145,8 +145,8 @@ public class ProductVariantApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping({ "/private/product/{id}/variants" })
-	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT")
+    @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
 	public @ResponseBody ReadableEntityList<ReadableProductVariant> list(@PathVariable final Long id,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			@RequestParam(required = false, defaultValue = "0") Integer page,
@@ -158,9 +158,9 @@ public class ProductVariantApi {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping({ "/private/product/{id}/variant/{variantId}" })
-	@Parameters({ 
-		@Parameter(name = "store", defaultValue = "DEFAULT"),
-			@Parameter(name = "lang", defaultValue = "en") })
+@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT")
+
+@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
 	public void delete(
 			@PathVariable Long id,
 			@PathVariable Long variantId,
