@@ -108,8 +108,8 @@ public class ReadableProductPopulator extends
               }
 	        }
 
-		     if(target instanceof ReadableProductFull) {
-		          ((ReadableProductFull)target).setDescriptions(fulldescriptions);
+		     if(target instanceof ReadableProductFull full) {
+		          full.setDescriptions(fulldescriptions);
 		      }
 
 		        if(language == null) {
@@ -441,7 +441,7 @@ public class ReadableProductPopulator extends
 								List<ProductOptionValueDescription> podescriptions = optionValue.getDescriptionsSettoList();
 								ProductOptionValueDescription podescription = null;
 								if(podescriptions!=null && podescriptions.size()>0) {
-									podescription = podescriptions.get(0);
+									podescription = podescriptions.getFirst();
 									if(podescriptions.size()>1) {
 										for(ProductOptionValueDescription optionValueDescription : podescriptions) {
 											if(optionValueDescription.getLanguage().getId().intValue()==language.getId().intValue()) {
@@ -554,8 +554,8 @@ public class ReadableProductPopulator extends
 
 
 
-		     if(target instanceof ReadableProductFull) {
-		          ((ReadableProductFull)target).setDescriptions(fulldescriptions);
+		     if(target instanceof ReadableProductFull full) {
+		          full.setDescriptions(fulldescriptions);
 		      }
 
 
@@ -578,7 +578,7 @@ public class ReadableProductPopulator extends
 		List<ProductOptionDescription> descriptions = productAttribute.getProductOption().getDescriptionsSettoList();
 		ProductOptionDescription description = null;
 		if(descriptions!=null && descriptions.size()>0) {
-			description = descriptions.get(0);
+			description = descriptions.getFirst();
 			if(descriptions.size()>1) {
 				for(ProductOptionDescription optionDescription : descriptions) {
 					if(optionDescription.getLanguage().getCode().equals(language.getCode())) {
@@ -636,7 +636,7 @@ public class ReadableProductPopulator extends
 		List<ProductOptionDescription> descriptions = productAttribute.getProductOption().getDescriptionsSettoList();
 		ProductOptionDescription description = null;
 		if(descriptions!=null && descriptions.size()>0) {
-			description = descriptions.get(0);
+			description = descriptions.getFirst();
 			if(descriptions.size()>1) {
 				for(ProductOptionDescription optionDescription : descriptions) {
 					if(optionDescription.getLanguage().getId().intValue()==language.getId().intValue()) {

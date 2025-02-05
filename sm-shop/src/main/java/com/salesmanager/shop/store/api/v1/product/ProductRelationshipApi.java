@@ -9,11 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import com.salesmanager.core.business.services.catalog.product.ProductService;
 import com.salesmanager.core.business.services.catalog.product.review.ProductReviewService;
@@ -25,9 +21,10 @@ import com.salesmanager.shop.store.controller.product.facade.ProductFacade;
 import com.salesmanager.shop.store.controller.store.facade.StoreFacade;
 import com.salesmanager.shop.utils.LanguageUtils;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
@@ -89,19 +86,17 @@ public class ProductRelationshipApi {
   	}
   }*/
 
-  @RequestMapping(value = "/product/{id}/related", method = RequestMethod.GET)
+  @GetMapping("/product/{id}/related")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(
+  @Operation(
       httpMethod = "GET",
-      value =
+      summary =
           "Get product related items. This is used for doing cross-sell and up-sell functionality on a product details page",
-      notes = "",
-      produces = "application/json",
-      response = List.class)
+      description = "")
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public List<ReadableProduct> getAll(
       @PathVariable final Long id,

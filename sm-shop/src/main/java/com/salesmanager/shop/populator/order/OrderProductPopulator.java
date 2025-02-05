@@ -132,8 +132,8 @@ public class OrderProductPopulator extends
 					}
 					
 					orderProductAttribute.setProductAttributeIsFree(attr.getProductAttributeIsFree());
-					orderProductAttribute.setProductAttributeName(attr.getProductOption().getDescriptionsSettoList().get(0).getName());
-					orderProductAttribute.setProductAttributeValueName(attr.getProductOptionValue().getDescriptionsSettoList().get(0).getName());
+					orderProductAttribute.setProductAttributeName(attr.getProductOption().getDescriptionsSettoList().getFirst().getName());
+					orderProductAttribute.setProductAttributeValueName(attr.getProductOptionValue().getDescriptionsSettoList().getFirst().getName());
 					orderProductAttribute.setProductAttributePrice(attr.getProductAttributePrice());
 					orderProductAttribute.setProductAttributeWeight(attr.getProductAttributeWeight());
 					orderProductAttribute.setProductOptionId(attr.getProductOption().getId());

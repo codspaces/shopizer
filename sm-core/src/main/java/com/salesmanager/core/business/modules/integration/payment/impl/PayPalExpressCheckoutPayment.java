@@ -399,7 +399,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			 
 			 if(!"Success".equals(refundAck)) {
 				LOGGER.error("Wrong value from transaction commit " + refundAck);
-				throw new IntegrationException(ServiceException.EXCEPTION_TRANSACTION_DECLINED,"Paypal refund transaction code [" + refundTransactionResponse.getErrors().get(0).getErrorCode() + "], message-> " + refundTransactionResponse.getErrors().get(0).getShortMessage());
+				throw new IntegrationException(ServiceException.EXCEPTION_TRANSACTION_DECLINED,"Paypal refund transaction code [" + refundTransactionResponse.getErrors().getFirst().getErrorCode() + "], message-> " + refundTransactionResponse.getErrors().getFirst().getShortMessage());
 			 }
 
 			 
@@ -417,8 +417,8 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			
 			
 		} catch(Exception e) {
-			if(e instanceof IntegrationException) {
-				throw (IntegrationException)e;
+			if(e instanceof IntegrationException exception) {
+				throw exception;
 			} else {
 				throw new IntegrationException(e);
 			}
