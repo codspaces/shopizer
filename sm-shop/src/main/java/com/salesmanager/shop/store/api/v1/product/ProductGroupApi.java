@@ -28,10 +28,9 @@ import com.salesmanager.shop.store.controller.items.facade.ProductItemsFacade;
 
 import antlr.collections.List;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.Tag;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -42,7 +41,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Controller
 @RequestMapping("/api/v1")
-@Tag(tags = { "Product groups management resource (Product Groups Management Api)" })
+@Tag(name = "Product groups management resource (Product Groups Management Api)")
 @SwaggerDefinition(tags = {
 		@Tag(name = "Product groups management resource", description = "Product groups management") })
 public class ProductGroupApi {
@@ -55,10 +54,10 @@ public class ProductGroupApi {
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/private/products/group")
-  @Operation(httpMethod = "POST", summary = "Create product group", description = "")
+@ApiOperation(httpMethod = "POST", summary = "Create product group", description = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+@ApiParam(name = "store", defaultValue = "DEFAULT"),
+@ApiParam(name = "lang", defaultValue = "en")
   })
   public @ResponseBody ProductGroup creteGroup(
       @RequestBody ProductGroup group,
@@ -73,10 +72,10 @@ public class ProductGroupApi {
   
   @ResponseStatus(HttpStatus.OK)
   @PatchMapping("/private/products/group/{code}")
-  @Operation(httpMethod = "PATCH", summary = "Update product group visible flag", description = "")
+@ApiOperation(httpMethod = "PATCH", summary = "Update product group visible flag", description = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+@ApiParam(name = "store", defaultValue = "DEFAULT"),
+@ApiParam(name = "lang", defaultValue = "en")
   })
   public void updateGroup(
       @RequestBody ProductGroup group,
@@ -91,10 +90,10 @@ public class ProductGroupApi {
   }
   
   @GetMapping("/private/product/groups")
-  @Operation(httpMethod = "GET", summary = "Get products groups for a given merchant", description = "")
+@ApiOperation(httpMethod = "GET", summary = "Get products groups for a given merchant", description = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+@ApiParam(name = "store", defaultValue = "DEFAULT"),
+@ApiParam(name = "lang", defaultValue = "en")
   })
   public @ResponseBody java.util.List<ProductGroup> list(
 			@ApiIgnore MerchantStore merchantStore,
@@ -122,10 +121,10 @@ public class ProductGroupApi {
    */
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/products/group/{code}")
-  @Operation(httpMethod = "GET", summary = "Get products by group code", description = "")
+@ApiOperation(httpMethod = "GET", summary = "Get products by group code", description = "")
   @Parameters({
-      @Parameter(name = "store", defaultValue = "DEFAULT"),
-      @Parameter(name = "lang", defaultValue = "en")
+@ApiParam(name = "store", defaultValue = "DEFAULT"),
+@ApiParam(name = "lang", defaultValue = "en")
   })
   public @ResponseBody ReadableProductList getProductItemsByGroup(
       @PathVariable final String code,

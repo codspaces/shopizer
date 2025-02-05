@@ -19,18 +19,18 @@ public class CustomerEntity extends Customer implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Schema(notes = "Customer email address. Required for registration")
+    @Schema(description = "Customer email address. Required for registration")
 	@Email (message="{messages.invalid.email}")
     @NotEmpty(message="{NotEmpty.customer.emailAddress}")
 	private String emailAddress;
 	@Valid
-	@Schema(notes = "Customer billing address")
+    @Schema(description = "Customer billing address")
 	private Address billing;
 	private Address delivery;
-	@Schema(notes = "Customer gender M | F")
+    @Schema(description = "Customer gender M | F")
 	private String gender;
 
-	@Schema(notes = "2 letters language code en | fr | ...")
+    @Schema(description = "2 letters language code en | fr | ...")
 	private String language;
 	private String firstName;
 	private String lastName;

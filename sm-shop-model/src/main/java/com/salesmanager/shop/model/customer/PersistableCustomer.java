@@ -6,13 +6,13 @@ import com.salesmanager.shop.model.security.PersistableGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-@Schema(value="Customer", description="Customer model object")
+@Schema(example="Customer", description="Customer model object")
 public class PersistableCustomer extends CustomerEntity {
 
 	/**
 	 * 
 	 */
-    @Schema(notes = "Customer password")
+    @Schema(description = "Customer password")
 	private String password = null;
     private String repeatPassword = null;
 	private static final long serialVersionUID = 1L;

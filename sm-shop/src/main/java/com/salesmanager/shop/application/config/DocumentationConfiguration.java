@@ -1,6 +1,7 @@
 package com.salesmanager.shop.application.config;
 
-import static io.swagger.models.auth.In.HEADER;
+import io.swagger.models.auth.In;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import static java.util.Collections.singletonList;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
