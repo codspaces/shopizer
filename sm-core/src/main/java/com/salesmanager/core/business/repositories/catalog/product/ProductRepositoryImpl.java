@@ -259,7 +259,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 				LOGGER.error("Found multiple products for list of criterias with main criteria [" + seUrl + "]");
 			}
 			// p = (Product)q.getSingleResult();
-			p = products.get(0);
+			p = products.getFirst();
 		} catch (javax.persistence.NoResultException ignore) {
 
 		}
@@ -329,7 +329,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		if (results.isEmpty())
 			return null;
 		else if (results.size() == 1)
-			return results.get(0);
+			return results.getFirst();
 		throw new NonUniqueResultException();
 
 	}

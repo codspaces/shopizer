@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-public class CorsFilter extends HandlerInterceptorAdapter {
+public class CorsFilter implements HandlerInterceptor {
 
 		public CorsFilter() {
 			

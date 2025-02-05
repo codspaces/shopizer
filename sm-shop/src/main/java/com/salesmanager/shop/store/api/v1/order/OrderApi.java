@@ -20,14 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.salesmanager.core.business.services.customer.CustomerService;
 import com.salesmanager.core.business.services.shoppingcart.ShoppingCartService;
@@ -56,16 +49,16 @@ import com.salesmanager.shop.store.security.services.CredentialsService;
 import com.salesmanager.shop.utils.AuthorizationUtils;
 import com.salesmanager.shop.utils.LocaleUtils;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1")
-@Api(tags = { "Ordering api (Order Flow Api)" })
+@Tag(tags = { "Ordering api (Order Flow Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Order flow resource", description = "Manage orders (create, list, get)") })
 public class OrderApi {
 
@@ -109,14 +102,14 @@ public class OrderApi {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "/private/orders/customers/{id}" }, method = RequestMethod.GET)
+	@GetMapping({ "/private/orders/customers/{id}" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableOrderList list(@PathVariable final Long id,
-			@RequestParam(value = "start", required = false) Integer start,
-			@RequestParam(value = "count", required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
+			@RequestParam(required = false) Integer start,
+			@RequestParam(required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language, HttpServletResponse response) throws Exception {
 
 		Customer customer = customerService.getById(id);
@@ -128,10 +121,10 @@ public class OrderApi {
 		}
 
 		if (start == null) {
-			start = new Integer(0);
+			start = Integer.valueOf(0);
 		}
 		if (count == null) {
-			count = new Integer(100);
+			count = Integer.valueOf(100);
 		}
 
 		ReadableCustomer readableCustomer = new ReadableCustomer();
@@ -162,13 +155,13 @@ public class OrderApi {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "/auth/orders" }, method = RequestMethod.GET)
+	@GetMapping({ "/auth/orders" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
-	public ReadableOrderList list(@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "count", required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
+	public ReadableOrderList list(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Principal principal = request.getUserPrincipal();
@@ -182,10 +175,10 @@ public class OrderApi {
 		}
 
 		if (page == null) {
-			page = new Integer(0);
+			page = Integer.valueOf(0);
 		}
 		if (count == null) {
-			count = new Integer(100);
+			count = Integer.valueOf(100);
 		}
 
 		ReadableCustomer readableCustomer = new ReadableCustomer();
@@ -217,17 +210,17 @@ public class OrderApi {
 	 * @return List of orders
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "/private/orders" }, method = RequestMethod.GET)
+	@GetMapping({ "/private/orders" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public ReadableOrderList list(
-			@RequestParam(value = "count", required = false, defaultValue = DEFAULT_ORDER_LIST_COUNT) Integer count,
-			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "id", required = false) Long id,
-			@RequestParam(value = "status", required = false) String status,
-			@RequestParam(value = "phone", required = false) String phone,
-			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(required = false, defaultValue = DEFAULT_ORDER_LIST_COUNT) Integer count,
+			@RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) Long id,
+			@RequestParam(required = false) String status,
+			@RequestParam(required = false) String phone,
+			@RequestParam(required = false) String email,
 			@ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 
@@ -260,11 +253,11 @@ public class OrderApi {
 	 * @param language
 	 * @return
 	 */
-	@RequestMapping(value = { "/private/orders/{id}" }, method = RequestMethod.GET)
+	@GetMapping({ "/private/orders/{id}" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableOrder get(
 			@PathVariable final Long id,
 			@ApiIgnore MerchantStore merchantStore,
@@ -289,11 +282,11 @@ public class OrderApi {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "/auth/orders/{id}" }, method = RequestMethod.GET)
+	@GetMapping({ "/auth/orders/{id}" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableOrder getOrder(@PathVariable final Long id, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Principal principal = request.getUserPrincipal();
@@ -340,11 +333,11 @@ public class OrderApi {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "/auth/cart/{code}/checkout" }, method = RequestMethod.POST)
+	@PostMapping({ "/auth/cart/{code}/checkout" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableOrderConfirmation checkout(
 			@PathVariable final String code, //shopping cart
 			@Valid @RequestBody PersistableOrder order, // order
@@ -399,11 +392,11 @@ public class OrderApi {
 	 * @param language
 	 * @return
 	 */
-	@RequestMapping(value = { "/cart/{code}/checkout" }, method = RequestMethod.POST)
+	@PostMapping({ "/cart/{code}/checkout" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableOrderConfirmation checkout(
 			@PathVariable final String code,//shopping cart
 			@Valid @RequestBody PersistableAnonymousOrder order,//order
@@ -470,12 +463,12 @@ public class OrderApi {
 
 	}
 
-	@RequestMapping(value = { "/private/orders/{id}/customer" }, method = RequestMethod.PATCH)
+	@PatchMapping({ "/private/orders/{id}/customer" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({
+			@Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void updateOrderCustomer(
 			@PathVariable final Long id,
 			@Valid @RequestBody PersistableCustomer orderCustomer,
@@ -491,12 +484,12 @@ public class OrderApi {
 		return;
 	}
 
-	@RequestMapping(value = { "/private/orders/{id}/status" }, method = RequestMethod.PUT)
+	@PutMapping({ "/private/orders/{id}/status" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({
+			@Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void updateOrderStatus(
 			@PathVariable final Long id,
 			@Valid @RequestBody String status,

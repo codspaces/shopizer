@@ -84,7 +84,7 @@ public class MultipleEntryPointsSecurityConfig {
 	@Order(1)
 	public static class CustomerConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
-		@Bean("customerAuthenticationManager")
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean("customerAuthenticationManager")
 		@Override
 		public AuthenticationManager authenticationManagerBean() throws Exception {
 			return super.authenticationManagerBean();
@@ -107,7 +107,7 @@ public class MultipleEntryPointsSecurityConfig {
 		}
 
 
-		@Override
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
 		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(customerDetailsService);
 		}
@@ -173,7 +173,7 @@ public class MultipleEntryPointsSecurityConfig {
 			super();
 		}
 
-		@Override
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
 		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(userDetailsService);
 		}
@@ -292,7 +292,7 @@ public class MultipleEntryPointsSecurityConfig {
 		@Autowired
 		JWTAdminServicesImpl jwtUserDetailsService;
 
-		@Bean("jwtAdminAuthenticationManager")
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean("jwtAdminAuthenticationManager")
 		@Override
 		public AuthenticationManager authenticationManagerBean() throws Exception {
 			AuthenticationManager mgr = super.authenticationManagerBean();
@@ -305,7 +305,7 @@ public class MultipleEntryPointsSecurityConfig {
 			super();
 		}
 
-		@Override
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
 		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		       auth.userDetailsService(jwtUserDetailsService)
 	            .and()
@@ -377,13 +377,13 @@ public class MultipleEntryPointsSecurityConfig {
 			super();
 		}
 		
-		@Bean("jwtCustomerAuthenticationManager")
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean("jwtCustomerAuthenticationManager")
 		@Override
 		public AuthenticationManager authenticationManagerBean() throws Exception {
 			return super.authenticationManagerBean();
 		}
 
-		@Override
+		/*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
 		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(jwtCustomerDetailsService);
 		}

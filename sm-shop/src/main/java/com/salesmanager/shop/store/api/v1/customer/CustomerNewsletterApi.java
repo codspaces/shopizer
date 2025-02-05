@@ -21,12 +21,12 @@ import com.salesmanager.shop.model.customer.PersistableCustomer;
 import com.salesmanager.shop.model.customer.optin.PersistableCustomerOptin;
 import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 
@@ -37,7 +37,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping(value = "/api/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = { "Optin Customer to newsletter" })
+@Tag(tags = { "Optin Customer to newsletter" })
 @SwaggerDefinition(tags = { @Tag(name = "Manage customer subscription to newsletter", description = "Manage customer subscription to newsletter") })
 public class CustomerNewsletterApi {
 
@@ -47,14 +47,13 @@ public class CustomerNewsletterApi {
 
   /** Create new optin */
   @PostMapping("/newsletter")
-  @ApiOperation(
+  @Operation(
       httpMethod = "POST",
-      value = "Creates a newsletter optin",
-      notes = "",
-      produces = "application/json")
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en")
+      summary = "Creates a newsletter optin",
+      description = "")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public void create(
       @Valid @RequestBody PersistableCustomerOptin optin,
@@ -64,12 +63,10 @@ public class CustomerNewsletterApi {
 	}
 
   @PutMapping("/newsletter/{email}")
-  @ApiOperation(
+  @Operation(
       httpMethod = "PUT",
-      value = "Updates a customer",
-      notes = "Requires administration access",
-      produces = "application/json",
-      response = PersistableCustomer.class)
+      summary = "Updates a customer",
+      description = "Requires administration access")
   public void update(
       @PathVariable String email,
       @Valid @RequestBody PersistableCustomer customer,
@@ -79,11 +76,10 @@ public class CustomerNewsletterApi {
   }
 
   @DeleteMapping("/newsletter/{email}")
-  @ApiOperation(
+  @Operation(
       httpMethod = "DELETE",
-      value = "Deletes a customer",
-      notes = "Requires administration access",
-      response = Void.class)
+      summary = "Deletes a customer",
+      description = "Requires administration access")
   public ResponseEntity<Void> delete(
       @PathVariable String email, HttpServletRequest request, HttpServletResponse response) {
     throw new UnsupportedOperationException();
