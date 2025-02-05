@@ -236,8 +236,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
 		OrderSummary summary = new OrderSummary();
 
-		if (order instanceof ShopOrder) {
-			ShopOrder o = (ShopOrder) order;
+		if (order instanceof ShopOrder o) {
 			summary.setProducts(o.getShoppingCartItems());
 
 			if (o.getShippingSummary() != null) {

@@ -11,14 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+
 import com.salesmanager.core.business.services.catalog.product.manufacturer.ManufacturerService;
 import com.salesmanager.core.model.catalog.product.manufacturer.Manufacturer;
 import com.salesmanager.core.model.merchant.MerchantStore;
@@ -29,12 +23,12 @@ import com.salesmanager.shop.model.catalog.manufacturer.ReadableManufacturerList
 import com.salesmanager.shop.model.entity.EntityExists;
 import com.salesmanager.shop.model.entity.ListCriteria;
 import com.salesmanager.shop.store.controller.manufacturer.facade.ManufacturerFacade;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
@@ -44,7 +38,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Controller
 @RequestMapping("/api/v1")
-@Api(tags = { "Manufacturer / Brand management resource (Manufacturer / Brand Management Api)" })
+@Tag(tags = { "Manufacturer / Brand management resource (Manufacturer / Brand Management Api)" })
 @SwaggerDefinition(tags = {
 		@Tag(name = "Manufacturer / Brand Management Api", description = "Edit Manufacturer / Brand") })
 public class ProductManufacturerApi {
@@ -66,11 +60,11 @@ public class ProductManufacturerApi {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/private/manufacturer", method = RequestMethod.POST)
+	@PostMapping("/private/manufacturer")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public PersistableManufacturer create(@Valid @RequestBody PersistableManufacturer manufacturer,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, HttpServletResponse response) {
 
@@ -90,11 +84,11 @@ public class ProductManufacturerApi {
 		}
 	}
 
-	@RequestMapping(value = "/manufacturer/{id}", method = RequestMethod.GET)
+	@GetMapping("/manufacturer/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableManufacturer get(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language, HttpServletResponse response) {
 
@@ -119,18 +113,18 @@ public class ProductManufacturerApi {
 	}
 
 	
-	@RequestMapping(value = "/private/manufacturers", method = RequestMethod.GET)
+	@GetMapping("/private/manufacturers")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	@ApiOperation(httpMethod = "GET", value = "List manufacturers by store", notes = "This request supports paging or not. Paging supports page number and request count", response = ReadableManufacturerList.class)
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
+	@Operation(httpMethod = "GET", summary = "List manufacturers by store", description = "This request supports paging or not. Paging supports page number and request count")
 	public ReadableManufacturerList listByStore(
 			@ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-			@RequestParam(value = "count", required = false, defaultValue = "10") Integer count) {
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "10") Integer count) {
 
 		ListCriteria listCriteria = new ListCriteria();
 		listCriteria.setName(name);
@@ -138,16 +132,16 @@ public class ProductManufacturerApi {
 	}
 	
 	
-	@RequestMapping(value = "/manufacturers", method = RequestMethod.GET)
+	@GetMapping("/manufacturers")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	@ApiOperation(httpMethod = "GET", value = "List manufacturers by store", notes = "This request supports paging or not. Paging supports page number and request count", response = ReadableManufacturerList.class)
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
+	@Operation(httpMethod = "GET", summary = "List manufacturers by store", description = "This request supports paging or not. Paging supports page number and request count")
 	public ReadableManufacturerList list(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
-			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-			@RequestParam(value = "count", required = false, defaultValue = "10") Integer count) {
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "10") Integer count) {
 
 		ListCriteria listCriteria = new ListCriteria();
 		listCriteria.setName(name);
@@ -156,9 +150,9 @@ public class ProductManufacturerApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/private/manufacturer/unique" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
-	@ApiOperation(httpMethod = "GET", value = "Check if manufacturer code already exists", notes = "", response = EntityExists.class)
-	public ResponseEntity<EntityExists> exists(@RequestParam(value = "code") String code,
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "GET", summary = "Check if manufacturer code already exists", description = "")
+	public ResponseEntity<EntityExists> exists(@RequestParam String code,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
 		boolean exists = manufacturerFacade.manufacturerExist(merchantStore, code);
@@ -166,11 +160,11 @@ public class ProductManufacturerApi {
 
 	}
 
-	@RequestMapping(value = "/private/manufacturer/{id}", method = RequestMethod.PUT)
+	@PutMapping("/private/manufacturer/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void update(@PathVariable Long id,
 			@Valid @RequestBody PersistableManufacturer manufacturer, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language, HttpServletRequest request, HttpServletResponse response) {
@@ -187,11 +181,11 @@ public class ProductManufacturerApi {
 		}
 	}
 
-	@RequestMapping(value = "/private/manufacturer/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping("/private/manufacturer/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public void delete(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			HttpServletResponse response) {
 
@@ -213,12 +207,12 @@ public class ProductManufacturerApi {
 		}
 	}
 
-	@RequestMapping(value = "/category/{id}/manufacturer", method = RequestMethod.GET)
+	@GetMapping("/category/{id}/manufacturer")
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(httpMethod = "GET", value = "Get all manufacturers for all items in a given category", notes = "", produces = "application/json", response = List.class)
+	@Operation(httpMethod = "GET", summary = "Get all manufacturers for all items in a given category", description = "")
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public List<ReadableManufacturer> list(@PathVariable final Long id, // category
 																					// id
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, HttpServletResponse response)

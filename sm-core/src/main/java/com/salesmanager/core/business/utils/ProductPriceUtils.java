@@ -209,7 +209,7 @@ public class ProductPriceUtils {
 			finalPrice.setAdditionalPrices(otherPrices);
 		} else {
 			if (otherPrices != null) {
-				finalPrice = otherPrices.get(0);
+				finalPrice = otherPrices.getFirst();
 			}
 		}
 
@@ -301,7 +301,7 @@ public class ProductPriceUtils {
 
 		try {
 			currency = store.getCurrency().getCurrency();
-			locale = new Locale(store.getDefaultLanguage().getCode(), store.getCountry().getIsoCode());
+			locale = Locale.of(store.getDefaultLanguage().getCode(), store.getCountry().getIsoCode());
 		} catch (Exception e) {
 			LOGGER.error("Cannot create currency or locale instance for store " + store.getCode());
 		}
@@ -598,7 +598,7 @@ public class ProductPriceUtils {
 			finalPrice.setAdditionalPrices(otherPrices);
 		} else {
 			if (otherPrices != null) {
-				finalPrice = otherPrices.get(0);
+				finalPrice = otherPrices.getFirst();
 			}
 		}
 
@@ -635,7 +635,7 @@ public class ProductPriceUtils {
 			finalPrice.setAdditionalPrices(otherPrices);
 		} else {
 			if (otherPrices != null) {
-				finalPrice = otherPrices.get(0);
+				finalPrice = otherPrices.getFirst();
 			}
 		}
 
@@ -710,7 +710,7 @@ public class ProductPriceUtils {
 		double arith = finalPrice.getProductPrice().getProductPriceSpecialAmount().doubleValue()
 				/ finalPrice.getProductPrice().getProductPriceAmount().doubleValue();
 		double fsdiscount = 100 - (arith * 100);
-		Float percentagediscount = new Float(fsdiscount);
+        Float percentagediscount = Float.valueOf((float) fsdiscount);
 		int percent = percentagediscount.intValue();
 		finalPrice.setDiscountPercent(percent);
 

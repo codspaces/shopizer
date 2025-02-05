@@ -31,7 +31,7 @@ public class SecurityGroupsBuilder {
 	
 	public SecurityGroupsBuilder addPermission(String name) {
 		if(this.lastGroup == null) {
-			Group g = this.groups.get(0);
+			Group g = this.groups.getFirst();
 			if(g == null) {
 				g = new Group();
 				g.setGroupName("UNDEFINED");
@@ -51,7 +51,7 @@ public class SecurityGroupsBuilder {
 	public SecurityGroupsBuilder addPermission(Permission permission) {
 		
 		if(this.lastGroup == null) {
-			Group g = this.groups.get(0);
+			Group g = this.groups.getFirst();
 			if(g == null) {
 				g = new Group();
 				g.setGroupName("UNDEFINED");
