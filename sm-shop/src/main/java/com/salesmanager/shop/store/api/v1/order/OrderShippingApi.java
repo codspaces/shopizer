@@ -13,11 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.salesmanager.core.business.services.catalog.pricing.PricingService;
 import com.salesmanager.core.business.services.customer.CustomerService;
@@ -38,16 +34,16 @@ import com.salesmanager.shop.store.controller.order.facade.OrderFacade;
 import com.salesmanager.shop.store.controller.shoppingCart.facade.ShoppingCartFacade;
 import com.salesmanager.shop.utils.LabelUtils;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/api/v1")
-@Api(tags = {"Shipping Quotes and Calculation resource (Shipping Api)"})
+@Tag(tags = {"Shipping Quotes and Calculation resource (Shipping Api)"})
 @SwaggerDefinition(tags = {
     @Tag(name = "Shipping Quotes and Calculation resource", description = "Get shipping quotes for public api and loged in customers")
 })
@@ -76,13 +72,11 @@ public class OrderShippingApi {
    * @return
    * @throws Exception
    */
-  @RequestMapping(
-      value = {"/auth/cart/{code}/shipping"},
-      method = RequestMethod.GET)
+  @GetMapping({"/auth/cart/{code}/shipping"})
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public ReadableShippingSummary shipping(
       @PathVariable final String code,
@@ -187,13 +181,11 @@ public class OrderShippingApi {
    * @return
    * @throws Exception
    */
-  @RequestMapping(
-      value = {"/cart/{code}/shipping"},
-      method = RequestMethod.POST)
+  @PostMapping({"/cart/{code}/shipping"})
   @ResponseBody
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+  @Parameters({
+      @Parameter(name = "store", defaultValue = "DEFAULT"),
+      @Parameter(name = "lang", defaultValue = "en")
   })
   public ReadableShippingSummary shipping(
       @PathVariable final String code,

@@ -36,17 +36,17 @@ import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-@Api(tags = { "Customer management resource (Customer Management Api)" })
+@Tag(tags = { "Customer management resource (Customer Management Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "Customer management resource", description = "Manage customers") })
 public class CustomerApi {
 
@@ -60,8 +60,8 @@ public class CustomerApi {
 
 	/** Create new customer for a given MerchantStore */
 	@PostMapping("/private/customer")
-	@ApiOperation(httpMethod = "POST", value = "Creates a customer", notes = "Requires administration access", produces = "application/json", response = ReadableCustomer.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "POST", summary = "Creates a customer", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public ReadableCustomer create(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			@Valid @RequestBody PersistableCustomer customer) {
 		return customerFacade.create(customer, merchantStore, language);
@@ -69,8 +69,8 @@ public class CustomerApi {
 	}
 
 	@PutMapping("/private/customer/{id}")
-	@ApiOperation(httpMethod = "PUT", value = "Updates a customer", notes = "Requires administration access", produces = "application/json", response = PersistableCustomer.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "PUT", summary = "Updates a customer", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public PersistableCustomer update(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
 			@Valid @RequestBody PersistableCustomer customer) {
 
@@ -79,8 +79,8 @@ public class CustomerApi {
 	}
 
 	@PatchMapping("/private/customer/{id}/address")
-	@ApiOperation(httpMethod = "PATCH", value = "Updates a customer", notes = "Requires administration access", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "PATCH", summary = "Updates a customer", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public void updateAddress(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
 			@RequestBody PersistableCustomer customer) {
 
@@ -89,8 +89,8 @@ public class CustomerApi {
 	}
 
 	@DeleteMapping("/private/customer/{id}")
-	@ApiOperation(httpMethod = "DELETE", value = "Deletes a customer", notes = "Requires administration access")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "DELETE", summary = "Deletes a customer", description = "Requires administration access")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public void delete(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore) {
 		
 		String authenticatedUser = userFacade.authenticatedUser();
@@ -114,10 +114,10 @@ public class CustomerApi {
 	 * @throws Exception
 	 */
 	@GetMapping("/private/customers")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
-	public ReadableCustomerList list(@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "count", required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
+	public ReadableCustomerList list(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer count, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 		CustomerCriteria customerCriteria = createCustomerCriteria(page, count);
 		return customerFacade.getListByStore(merchantStore, customerCriteria, language);
@@ -131,8 +131,8 @@ public class CustomerApi {
 	}
 
 	@GetMapping("/private/customer/{id}")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableCustomer get(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 		return customerFacade.getCustomerById(id, merchantStore, language);
@@ -147,8 +147,8 @@ public class CustomerApi {
 	 * @return
 	 */
 	@GetMapping({ "/private/customer/profile", "/auth/customer/profile" })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT"),
+			@Parameter(name = "lang", defaultValue = "en") })
 	public ReadableCustomer getAuthUser(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
@@ -157,8 +157,8 @@ public class CustomerApi {
 	}
 
 	@PatchMapping("/auth/customer/address")
-	@ApiOperation(httpMethod = "PATCH", value = "Updates a loged in customer address", notes = "Requires authentication", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "PATCH", summary = "Updates a loged in customer address", description = "Requires authentication")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public void updateAuthUserAddress(@ApiIgnore MerchantStore merchantStore, @RequestBody PersistableCustomer customer,
 			HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
@@ -169,8 +169,8 @@ public class CustomerApi {
 	}
 
 	@PatchMapping("/auth/customer/")
-	@ApiOperation(httpMethod = "PATCH", value = "Updates a loged in customer profile", notes = "Requires authentication", produces = "application/json", response = PersistableCustomer.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "PATCH", summary = "Updates a loged in customer profile", description = "Requires authentication")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public PersistableCustomer update(@ApiIgnore MerchantStore merchantStore,
 			@Valid @RequestBody PersistableCustomer customer, HttpServletRequest request) {
 
@@ -181,8 +181,8 @@ public class CustomerApi {
 	}
 	
 	@DeleteMapping("/auth/customer/")
-	@ApiOperation(httpMethod = "DELETE", value = "Deletes a loged in customer profile", notes = "Requires authentication", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(httpMethod = "DELETE", summary = "Deletes a loged in customer profile", description = "Requires authentication")
+	@Parameters({ @Parameter(name = "store", defaultValue = "DEFAULT") })
 	public void delete(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			HttpServletRequest request) {
 
