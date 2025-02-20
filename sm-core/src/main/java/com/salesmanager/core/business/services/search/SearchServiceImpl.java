@@ -150,7 +150,7 @@ public class SearchServiceImpl implements com.salesmanager.core.business.service
 				}
 	
 				if (!CollectionUtils.isEmpty(documents)) {
-					if (documents.iterator().next() != null) {
+					if (documents.getFirst() != null) {
 						searchModule.delete(languages, product.getId());
 					}
 				}
