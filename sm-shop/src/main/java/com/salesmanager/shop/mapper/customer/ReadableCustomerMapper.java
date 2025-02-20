@@ -120,8 +120,8 @@ public class ReadableCustomerMapper implements Mapper<Customer, ReadableCustomer
 				option.setCode(attribute.getCustomerOption().getCode());
 
 				CustomerOptionDescription d = new CustomerOptionDescription();
-				d.setDescription(attribute.getCustomerOption().getDescriptionsSettoList().get(0).getDescription());
-				d.setName(attribute.getCustomerOption().getDescriptionsSettoList().get(0).getName());
+				d.setDescription(attribute.getCustomerOption().getDescriptionsSettoList().getFirst().getDescription());
+				d.setName(attribute.getCustomerOption().getDescriptionsSettoList().getFirst().getName());
 				option.setDescription(d);
 
 				readableAttribute.setCustomerOption(option);
@@ -129,8 +129,8 @@ public class ReadableCustomerMapper implements Mapper<Customer, ReadableCustomer
 				ReadableCustomerOptionValue optionValue = new ReadableCustomerOptionValue();
 				optionValue.setId(attribute.getCustomerOptionValue().getId());
 				CustomerOptionValueDescription vd = new CustomerOptionValueDescription();
-				vd.setDescription(attribute.getCustomerOptionValue().getDescriptionsSettoList().get(0).getDescription());
-				vd.setName(attribute.getCustomerOptionValue().getDescriptionsSettoList().get(0).getName());
+				vd.setDescription(attribute.getCustomerOptionValue().getDescriptionsSettoList().getFirst().getDescription());
+				vd.setName(attribute.getCustomerOptionValue().getDescriptionsSettoList().getFirst().getName());
 				optionValue.setCode(attribute.getCustomerOptionValue().getCode());
 				optionValue.setDescription(vd);
 

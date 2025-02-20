@@ -122,7 +122,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			// need to add link to controller receiving user reset password
 			// request
 			String customerResetLink = new StringBuilder().append(baseUrl)
-					.append(String.format(resetCustomerLink, store.getCode(), token)).toString();
+					.append(resetCustomerLink.formatted(store.getCode(), token)).toString();
 
 			resetPasswordRequest(customer, customerResetLink, store, lamguageService.toLocale(language, store));
 

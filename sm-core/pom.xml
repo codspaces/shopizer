@@ -18,6 +18,7 @@
 		<coverage.lines>.00</coverage.lines>
 		<coverage.branches>.00</coverage.branches>
 		<google-client-maps-services-version>0.1.6</google-client-maps-services-version>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<dependencies>
@@ -148,6 +149,11 @@
 					<artifactId>commons-collections</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
+			<version>1.0.3</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
