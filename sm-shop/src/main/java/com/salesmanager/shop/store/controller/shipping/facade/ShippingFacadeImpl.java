@@ -238,7 +238,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 		List<com.salesmanager.core.model.shipping.Package> packages = configuration.getPackages().stream().filter(p -> p.getCode().equalsIgnoreCase(code)).collect(Collectors.toList());
 		
 		if(!packages.isEmpty()) {
-			return packages.get(0);
+			return packages.getFirst();
 		} else {
 			return null;
 		}

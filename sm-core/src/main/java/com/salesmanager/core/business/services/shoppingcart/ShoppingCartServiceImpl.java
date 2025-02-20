@@ -81,7 +81,7 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 			ShoppingCart shoppingCart = null;
 
 			if (!CollectionUtils.isEmpty(validCart)) {
-				shoppingCart = validCart.get(0);
+				shoppingCart = validCart.getFirst();
 				getPopulatedShoppingCart(shoppingCart, store);
 				if (shoppingCart != null && checkObsolete(shoppingCart)) {
 					delete(shoppingCart);

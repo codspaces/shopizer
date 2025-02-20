@@ -12,6 +12,7 @@ import static com.salesmanager.shop.constants.Constants.SLASH;
 import static com.salesmanager.shop.constants.Constants.STATIC_URI;
 import static com.salesmanager.shop.constants.Constants.URL_EXTENSION;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
@@ -215,7 +216,7 @@ public class FilePathUtils {
 	{
 	    try
 	    {
-	        URL url = new URL(urlString);
+	        URL url = URI.create(urlString).toURL();
 	        url.toURI();
 	        return true;
 	    } catch (Exception exception)
