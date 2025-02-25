@@ -266,7 +266,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 						List<ProductOptionValueDescription> podescriptions = optionValue.getDescriptionsSettoList();
 						ProductOptionValueDescription podescription = null;
 						if (podescriptions != null && podescriptions.size() > 0) {
-							podescription = podescriptions.get(0);
+							podescription = podescriptions.getFirst();
 							if (podescriptions.size() > 1) {
 								for (ProductOptionValueDescription optionValueDescription : podescriptions) {
 									if (optionValueDescription.getLanguage().getId().intValue() == language.getId()
@@ -575,7 +575,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 		List<ProductOptionValueDescription> podescriptions = optionValue.getDescriptionsSettoList();
 		ProductOptionValueDescription podescription = null;
 		if (podescriptions != null && podescriptions.size() > 0) {
-			podescription = podescriptions.get(0);
+			podescription = podescriptions.getFirst();
 			if (podescriptions.size() > 1) {
 				for (ProductOptionValueDescription optionValueDescription : podescriptions) {
 					if (optionValueDescription.getLanguage().getId().intValue() == language.getId().intValue()) {
@@ -665,7 +665,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 		List<ProductOptionDescription> descriptions = opt.getDescriptionsSettoList();
 		ProductOptionDescription description = null;
 		if (descriptions != null && descriptions.size() > 0) {
-			description = descriptions.get(0);
+			description = descriptions.getFirst();
 			if (descriptions.size() > 1) {
 				for (ProductOptionDescription optionDescription : descriptions) {
 					if (optionDescription.getLanguage().getCode().equals(language.getCode())) {

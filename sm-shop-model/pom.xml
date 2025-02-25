@@ -46,6 +46,9 @@
       <organizationUrl>http://www.shopizer.com</organizationUrl>
     </developer>
   </developers>
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+	</properties>
 
   <dependencies>
   
@@ -66,8 +69,8 @@
 	</dependency>
 
     <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>javax.annotation-api</artifactId>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
     </dependency>
 
     <!-- Swagger 2 documentation -->
