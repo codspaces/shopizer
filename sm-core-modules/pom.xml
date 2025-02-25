@@ -54,6 +54,9 @@
       <organizationUrl>http://www.shopizer.com</organizationUrl>
     </developer>
   </developers>
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+	</properties>
 
   <dependencies>
     <dependency>

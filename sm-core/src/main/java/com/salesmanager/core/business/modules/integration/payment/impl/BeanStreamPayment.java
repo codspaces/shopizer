@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -117,8 +118,8 @@ public class BeanStreamPayment implements PaymentModule {
 				
 			} catch(Exception e) {
 				
-				if(e instanceof IntegrationException)
-					throw (IntegrationException)e;
+				if(e instanceof IntegrationException exception)
+					throw exception;
 				throw new IntegrationException("Error while processing BeanStream transaction",e);
 	
 			} 
@@ -206,7 +207,7 @@ public class BeanStreamPayment implements PaymentModule {
 			
 		
 			
-			URL postURL = new URL(server);
+			URL postURL = URI.create(server).toURL();
 			conn = (HttpURLConnection) postURL.openConnection();
 
 
@@ -216,8 +217,8 @@ public class BeanStreamPayment implements PaymentModule {
 			
 		} catch(Exception e) {
 			
-			if(e instanceof IntegrationException)
-				throw (IntegrationException)e;
+			if(e instanceof IntegrationException exception)
+				throw exception;
 			throw new IntegrationException("Error while processing BeanStream transaction",e);
 
 		} finally {
@@ -326,7 +327,7 @@ public class BeanStreamPayment implements PaymentModule {
 			
 	
 			
-			URL postURL = new URL(server);
+			URL postURL = URI.create(server).toURL();
 			conn = (HttpURLConnection) postURL.openConnection();
 			
 
@@ -411,8 +412,8 @@ public class BeanStreamPayment implements PaymentModule {
 			
 			
 		} catch(Exception e) {
-			if(e instanceof IntegrationException) {
-				throw (IntegrationException)e;
+			if(e instanceof IntegrationException exception) {
+				throw exception;
 			}
 			
 			throw new IntegrationException("Error while processing BeanStream transaction",e);
@@ -620,7 +621,7 @@ public class BeanStreamPayment implements PaymentModule {
 			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageLogString.toString());
 
 			
-			URL postURL = new URL(server);
+			URL postURL = URI.create(server).toURL();
 			conn = (HttpURLConnection) postURL.openConnection();
 
 
@@ -629,8 +630,8 @@ public class BeanStreamPayment implements PaymentModule {
 			
 		} catch(Exception e) {
 			
-			if(e instanceof IntegrationException)
-				throw (IntegrationException)e;
+			if(e instanceof IntegrationException exception)
+				throw exception;
 			throw new IntegrationException("Error while processing BeanStream transaction",e);
 
 		} finally {
