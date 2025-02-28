@@ -162,7 +162,7 @@ public class ProductFacadeV2Impl implements ProductFacade {
 			if (criterias.getCategoryIds().size() == 1) {
 
 				com.salesmanager.core.model.catalog.category.Category category = categoryService
-						.getById(criterias.getCategoryIds().get(0));
+						.getById(criterias.getCategoryIds().getFirst());
 
 				if (category != null) {
 					String lineage = new StringBuilder().append(category.getLineage())
